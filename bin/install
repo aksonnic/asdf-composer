@@ -13,8 +13,8 @@ installer() {
 
   (
       set -e
-      curl -Lo ${ASDF_INSTALL_PATH} ${url}
-      chmod u+x ${ASDF_INSTALL_PATH}/composer.phar
+      curl -Lo ${ASDF_INSTALL_PATH}/composer ${url}
+      chmod u+x ${ASDF_INSTALL_PATH}/composer
   ) || (rm -rf ${ASDF_INSTALL_PATH}; exit 1)
 
   echo
