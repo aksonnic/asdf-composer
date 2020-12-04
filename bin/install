@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+installer() {
+  local url=$(awk -v version="$ASDF_INSTALL_VERSION" '$1 == version { print $2 }' $(dirname ${0})/versions)
+
+  if [ "${ASDF_INSTALL_TYPE}" != "version" ]
+  then
+    echo "The asdf-composer plugin only supports version installs."
+    exit 1
+  fi
+
+  (
+      set -e
+      curl -Lo ${ASDF_INSTALL_PATH} ${url}
+      chmod u+x ${ASDF_INSTALL_PATH}/composer.phar
+  ) || (rm -rf ${ASDF_INSTALL_PATH}; exit 1)
+
+  echo
+  echo "Composer $ASDF_INSTALL_VERSION has been installed. Activate globally with:"
+  echo
+  echo "    asdf global composer $ASDF_INSTALL_VERSION"
+  echo
+  echo "Activate locally in the current folder with:"
+  echo
+  echo "    asdf local composer $ASDF_INSTALL_VERSION"
+  echo
+}
+
+installer
