@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+current_script_path=${BASH_SOURCE[0]}
+major_version=`echo "${ASDF_INSTALL_VERSION}" | awk -F. '{print $1}'`
+composer_home_dir=$(dirname "$(dirname "$current_script_path")")
+package_dir="${composer_home_dir}/global-packages/${major_version}"
+
+mkdir -p "${package_dir}"
+export COMPOSER_HOME="${package_dir}"
